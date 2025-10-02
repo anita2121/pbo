@@ -35,25 +35,45 @@ class Mahasiswa {
         console.log("Status tidak valid! Pilih: aktif, cuti, atau lulus.");
       }
     };
+
+    // Metode tambahan
+    this.perkenalan = function() {
+      console.log(Halo, saya ${this.nama} (${this.nim}) dari jurusan ${this.jurusan}.);
+    };
+
+    this.cekAktif = function() {
+      if (_status.toLowerCase() === "aktif") {
+        console.log(${this.nama} masih aktif kuliah.);
+      } else {
+        console.log(${this.nama} tidak aktif (status: ${_status}).);
+      }
+    };
   }
 }
 
-// Membuat objek
-let mhs1 = new Mahasiswa("Nita", "202401110052", "informatika", "Jl. Melati No. 10", "aktif");
+// Membuat beberapa objek
+let mhs1 = new Mahasiswa("Nita", "12345", "Psikologi", "Jl. Melati No. 10", "aktif");
+let mhs2 = new Mahasiswa("Andi", "67890", "Teknik Informatika", "Jl. Mawar No. 5", "cuti");
+let mhs3 = new Mahasiswa("Siti", "54321", "Hukum", "Jl. Kenanga No. 7", "lulus");
 
-// Akses publik
-console.log("Nama:", mhs1.nama);
-console.log("NIM:", mhs1.nim);
-console.log("Jurusan:", mhs1.jurusan);
+// Panggil metode perkenalan
+mhs1.perkenalan();
+mhs2.perkenalan();
+mhs3.perkenalan();
 
-// Akses privat via getter
-console.log("Alamat:", mhs1.getAlamat());
-console.log("Status:", mhs1.getStatus());
+// Cek status tiap mahasiswa
+mhs1.cekAktif();
+mhs2.cekAktif();
+mhs3.cekAktif();
 
-// Ubah alamat & status
-mhs1.setAlamat("Jl. Kenanga No. 25");
-mhs1.setStatus("cuti");
+// Akses privat lewat getter
+console.log("Alamat mhs1:", mhs1.getAlamat());
+console.log("Status mhs2:", mhs2.getStatus());
 
-// Cek setelah diubah
-console.log("Alamat baru:", mhs1.getAlamat());
-console.log("Status baru:", mhs1.getStatus());
+// Update data privat
+mhs1.setAlamat("Jl. Merpati No. 20");
+mhs2.setStatus("aktif");
+
+// Cek perubahan
+console.log("Alamat baru mhs1:", mhs1.getAlamat());
+console.log("Status baru mhs2:", mhs2.getStatus());
