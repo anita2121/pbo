@@ -35,45 +35,48 @@ class Mahasiswa {
         console.log("Status tidak valid! Pilih: aktif, cuti, atau lulus.");
       }
     };
-
-    // Metode tambahan
-    this.perkenalan = function() {
-      console.log(Halo, saya ${this.nama} (${this.nim}) dari jurusan ${this.jurusan}.);
-    };
-
-    this.cekAktif = function() {
-      if (_status.toLowerCase() === "aktif") {
-        console.log(${this.nama} masih aktif kuliah.);
-      } else {
-        console.log(${this.nama} tidak aktif (status: ${_status}).);
-      }
-    };
   }
 }
 
-// Membuat beberapa objek
+// Membuat beberapa objek mahasiswa
 let mhs1 = new Mahasiswa("Nita", "12345", "Psikologi", "Jl. Melati No. 10", "aktif");
 let mhs2 = new Mahasiswa("Andi", "67890", "Teknik Informatika", "Jl. Mawar No. 5", "cuti");
 let mhs3 = new Mahasiswa("Siti", "54321", "Hukum", "Jl. Kenanga No. 7", "lulus");
 
-// Panggil metode perkenalan
-mhs1.perkenalan();
-mhs2.perkenalan();
-mhs3.perkenalan();
+console.log("=== Data Mahasiswa 1 ===");
+console.log("Nama:", mhs1.nama);
+console.log("NIM:", mhs1.nim);
+console.log("Jurusan:", mhs1.jurusan);
+console.log("Alamat:", mhs1.getAlamat());
+console.log("Status:", mhs1.getStatus());
 
-// Cek status tiap mahasiswa
-mhs1.cekAktif();
-mhs2.cekAktif();
-mhs3.cekAktif();
+console.log("\n=== Data Mahasiswa 2 ===");
+console.log("Nama:", mhs2.nama);
+console.log("NIM:", mhs2.nim);
+console.log("Jurusan:", mhs2.jurusan);
+console.log("Alamat:", mhs2.getAlamat());
+console.log("Status:", mhs2.getStatus());
 
-// Akses privat lewat getter
-console.log("Alamat mhs1:", mhs1.getAlamat());
-console.log("Status mhs2:", mhs2.getStatus());
+console.log("\n=== Data Mahasiswa 3 ===");
+console.log("Nama:", mhs3.nama);
+console.log("NIM:", mhs3.nim);
+console.log("Jurusan:", mhs3.jurusan);
+console.log("Alamat:", mhs3.getAlamat());
+console.log("Status:", mhs3.getStatus());
 
-// Update data privat
+// --- Update semua status & alamat ---
 mhs1.setAlamat("Jl. Merpati No. 20");
+mhs1.setStatus("cuti");
+
+mhs2.setAlamat("Jl. Flamboyan No. 88");
 mhs2.setStatus("aktif");
 
-// Cek perubahan
-console.log("Alamat baru mhs1:", mhs1.getAlamat());
-console.log("Status baru mhs2:", mhs2.getStatus());
+mhs3.setAlamat("Jl. Anggrek No. 15");
+mhs3.setStatus("aktif");
+
+// --- Cek hasil update ---
+console.log("\n=== Setelah Update ===");
+console.log("Mhs1:", mhs1.nama, "-", mhs1.getAlamat(), "-", mhs1.getStatus());
+console.log("Mhs2:", mhs2.nama, "-", mhs2.getAlamat(), "-", mhs2.getStatus());
+console.log("Mhs3:", mhs3.nama, "-", mhs3.getAlamat(), "-", mhs3.getStatus());
+
