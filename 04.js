@@ -10,11 +10,11 @@ class Mahasiswa {
     let _status = status;
 
     // Getter & Setter alamat
-    this.getAlamat = function() {
+    this.getAlamat = function () {
       return _alamat;
     };
 
-    this.setAlamat = function(alamatBaru) {
+    this.setAlamat = function (alamatBaru) {
       if (alamatBaru.length > 5) {
         _alamat = alamatBaru;
       } else {
@@ -23,11 +23,11 @@ class Mahasiswa {
     };
 
     // Getter & Setter status
-    this.getStatus = function() {
+    this.getStatus = function () {
       return _status;
     };
 
-    this.setStatus = function(statusBaru) {
+    this.setStatus = function (statusBaru) {
       const statusValid = ["aktif", "cuti", "lulus"];
       if (statusValid.includes(statusBaru.toLowerCase())) {
         _status = statusBaru;
@@ -43,40 +43,31 @@ let mhs1 = new Mahasiswa("Nita", "12345", "Psikologi", "Jl. Melati No. 10", "akt
 let mhs2 = new Mahasiswa("Andi", "67890", "Teknik Informatika", "Jl. Mawar No. 5", "cuti");
 let mhs3 = new Mahasiswa("Siti", "54321", "Hukum", "Jl. Kenanga No. 7", "lulus");
 
-console.log("=== Data Mahasiswa 1 ===");
-console.log("Nama:", mhs1.nama);
-console.log("NIM:", mhs1.nim);
-console.log("Jurusan:", mhs1.jurusan);
-console.log("Alamat:", mhs1.getAlamat());
-console.log("Status:", mhs1.getStatus());
+// --- Fungsi cetak ---
+function cetakData(mahasiswa, namaObjek, alamatBaru, statusBaru) {
+  console.log(`\n=== Data ${namaObjek} ===`);
 
-console.log("\n=== Data Mahasiswa 2 ===");
-console.log("Nama:", mhs2.nama);
-console.log("NIM:", mhs2.nim);
-console.log("Jurusan:", mhs2.jurusan);
-console.log("Alamat:", mhs2.getAlamat());
-console.log("Status:", mhs2.getStatus());
+  // Data awal
+  console.log(">> Data Awal");
+  console.log("Nama:", mahasiswa.nama);
+  console.log("NIM:", mahasiswa.nim);
+  console.log("Jurusan:", mahasiswa.jurusan);
+  console.log("Alamat:", mahasiswa.getAlamat());
+  console.log("Status:", mahasiswa.getStatus());
 
-console.log("\n=== Data Mahasiswa 3 ===");
-console.log("Nama:", mhs3.nama);
-console.log("NIM:", mhs3.nim);
-console.log("Jurusan:", mhs3.jurusan);
-console.log("Alamat:", mhs3.getAlamat());
-console.log("Status:", mhs3.getStatus());
+  // Update
+  if (alamatBaru) mahasiswa.setAlamat(alamatBaru);
+  if (statusBaru) mahasiswa.setStatus(statusBaru);
 
-// --- Update semua status & alamat ---
-mhs1.setAlamat("Jl. Merpati No. 20");
-mhs1.setStatus("cuti");
+  console.log("\n>> Data Update");
+  console.log("Nama:", mahasiswa.nama);
+  console.log("NIM:", mahasiswa.nim);
+  console.log("Jurusan:", mahasiswa.jurusan);
+  console.log("Alamat:", mahasiswa.getAlamat());
+  console.log("Status:", mahasiswa.getStatus());
+}
 
-mhs2.setAlamat("Jl. Flamboyan No. 88");
-mhs2.setStatus("aktif");
-
-mhs3.setAlamat("Jl. Anggrek No. 15");
-mhs3.setStatus("aktif");
-
-// --- Cek hasil update ---
-console.log("\n=== Setelah Update ===");
-console.log("Mhs1:", mhs1.nama, "-", mhs1.getAlamat(), "-", mhs1.getStatus());
-console.log("Mhs2:", mhs2.nama, "-", mhs2.getAlamat(), "-", mhs2.getStatus());
-console.log("Mhs3:", mhs3.nama, "-", mhs3.getAlamat(), "-", mhs3.getStatus());
-
+// Cetak semua data (dengan update berbeda)
+cetakData(mhs1, "Mahasiswa 1", "Jl. Merpati No. 20", "cuti");
+cetakData(mhs2, "Mahasiswa 2", "Jl. Anggrek No. 15", "aktif");
+cetakData(mhs3, "Mahasiswa 3", "Jl. Cemara No. 30", "cuti");
