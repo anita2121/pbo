@@ -4,17 +4,10 @@ mahasiswa.set("001", "Andi");
 mahasiswa.set("002", "Budi");
 mahasiswa.set("002", "Citra");
 mahasiswa.set("003", "Citra");
+console.log(mahasiswa.get("001"));
 console.log(mahasiswa.get("002"));
 console.log(mahasiswa.get("003"));
 // Output: citra citra
-
-// Generik TypeScript
-function printItems<T>(items: T[]): void {
- items.forEach(item => console.log(item));
-}
-// Bisa digunakan untuk berbagai tipe data
-printItems<number>([1, 2, 3, 4]);
-printItems<string>(["Andi", "Budi", "Citra"]);
 
 // Generik Javascript
 function printItems(items) {
@@ -25,16 +18,17 @@ printItems(["A", "B", "C"]); // Output: A, B, C
 printItems([1, 2, 3, "A", "B", "C"]);
 
 // Sistem Manajemen Mahasiswa
-let mahasiswa = new Map();
-mahasiswa.set("22001", { nama: "Andi", jurusan: "Informatika" });
-mahasiswa.set("22002", { nama: "Budi", jurusan: "Sistem Informasi" });
-console.log(mahasiswa.get("22001").nama); // Output: Andi
+let mahasiswaa = new Map();
+mahasiswaa.set("22001", { nama: "Andi", jurusan: "Informatika" });
+mahasiswaa.set("22002", { nama: "Budi", jurusan: "Sistem Informasi" });
+console.log(mahasiswaa.get("22001").nama); // Output: Andi
 
 // Aplikasi Todo List
 let tugas = new Set();
 tugas.add("Belajar OOP");
-tugas.add("Mengerjakan Tugas");
 tugas.add("Belajar OOP");
+tugas.add("Mengerjakan Tugas");
+tugas.add("Belajar OOP ");
 // Tidak akan ditambahkan karena sama persis 
 console.log(tugas); // Output: { 'Belajar OOP', 'Mengerjakan Tugas', 'Belajar OOP'}
 
