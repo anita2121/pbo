@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width,
+initial-scale=1.0">
 <title>GUI Sederhana</title>
 </head>
 <body>
-
 <h1 id="title">Halo, Mahasiswa!</h1>
+<h2>Halo, Mahasiswa!</h2>
+<b> tebal</b>
+<i> miring</i>
+    <ol>
+      <li>satu</li>
+      <li>dua</li>
+    </ol>
+  <table>
+<tr>  <td> 1 </td>  <td> 2 </td></tr>
+<tr>  <td> 3 </td>  <td> 4 </td></tr>  
+  </table>
+
+<img src='https://avatars.githubusercontent.com/u/201719450?v=4&size=64'>
+
+  <form>
+<input type='text' value='cobaan'>
+<input type='submit' value='kirim'>
+    
+  </form>
+
+
+  
 <button onclick="ubahTeks()">Klik Saya</button>
 
-<hr>
-
-<h1>Masukkan Nama Anda</h1>
-
-<input type="text" id="nameInput" placeholder="Nama Anda">
-<button onclick="tampilkanNama()">Submit</button>
-
-<h2 id="output"></h2>
-
-<img src="https://avatars.githubusercontent.com/u/201719450?v=4&size=64" 
-     alt="Foto Profil" width="120" />
-
+  
 <script>
 function ubahTeks() {
-  document.getElementById("title").innerText = "Teks telah berubah!";
-}
-
-function tampilkanNama() {
-  let nama = document.getElementById("nameInput").value;
-  document.getElementById("output").innerText = "Halo, " + nama + "!";
+document.getElementById("title").innerText = "Teks telah berubah!";
 }
 </script>
-
 </body>
 </html>
