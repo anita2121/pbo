@@ -1,42 +1,50 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"> 
-<meta name="viewport" content="width=device-width,
-initial-scale=1.0">
-<title>GUI Sederhana</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contoh Elemen HTML</title>
 </head>
 <body>
-<h1 id="title">Halo, Mahasiswa!</h1>
-<h2>Halo, Mahasiswa!</h2>
-<b> tebal</b>
-<i> miring</i>
-    <ol>
-      <li>satu</li>
-      <li>dua</li>
-    </ol>
-  <table>
-<tr>  <td> 1 </td>  <td> 2 </td></tr>
-<tr>  <td> 3 </td>  <td> 4 </td></tr>  
-  </table>
 
+<h1>Demo Elemen HTML</h1>
+
+<!-- 1. PARAGRAF -->
+<h2>1. Paragraf</h2>
+<p>halo semua ini aku widya </p>
+
+<!-- 2. TABLE -->
+<h2>2. Tabel</h2>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Nama</th>
+        <th>Umur</th>
+    </tr>
+    <tr>
+        <td>Widya</td>
+        <td>20</td>
+    </tr>
+
+</table>
+
+<!-- 3. IMAGE -->
+<h2>3. Gambar</h2>
 <img src='https://avatars.githubusercontent.com/u/201719450?v=4&size=64'>
-
-  <form>
-<input type='text' value='anita'>
-<input type='submit' value='kirim'>
     
-  </form>
+<!-- 4. FORM INPUT -->
+<h2>4. Form Input</h2>
+<h3>Masukkan Nama Anda</h3>
+<input type="text" id="nameInput" placeholder="Nama Anda">
+<button onclick="tampilkanNama()">Submit</button>
 
+<h2 id="output"></h2>
 
-  
-<button onclick="ubahTeks()">Klik Saya</button>
-
-  
 <script>
-function ubahTeks() {
-document.getElementById("title").innerText = "Teks telah berubah!";
+function tampilkanNama() {
+    let nama = document.getElementById("nameInput").value;
+    document.getElementById("output").innerText = "Halo, " + nama + "!";
 }
 </script>
+
 </body>
 </html>
