@@ -87,9 +87,7 @@
   <div class="box" id="app"></div>
 
   <script>
-    /* ===============================
-       AUTH SYSTEM (OOP)
-    ================================ */
+    /* AUTH SYSTEM (OOP) */
     class AuthSystem {
 
       constructor(containerId) {
@@ -98,9 +96,7 @@
         this.renderLogin();
       }
 
-      /* ===============================
-         DATA & LOCAL STORAGE
-      ================================ */
+      /* DATA & LOCAL STORAGE */
       initializeData() {
         if (!localStorage.getItem("authUsers")) {
           const users = {
@@ -115,9 +111,7 @@
         return JSON.parse(localStorage.getItem("authUsers"));
       }
 
-      /* ===============================
-         LOGIN UI
-      ================================ */
+      /*LOGIN UI*/
       renderLogin() {
         this.container.innerHTML = `
           <img src="foto4.png" alt="Login Image" class="login-image">
@@ -139,9 +133,7 @@
           .addEventListener("click", () => this.clearForm());
       }
 
-      /* ===============================
-         LOGIN PROCESS
-      ================================ */
+      /*LOGIN PROCESS*/
       handleLogin() {
         const username = document.getElementById("usernameInput").value.trim();
         const password = document.getElementById("passwordInput").value.trim();
@@ -163,9 +155,7 @@
         return users[username] === password;
       }
 
-      /* ===============================
-         SUCCESS UI
-      ================================ */
+      /*SUCCESS UI*/
       renderSuccess(username) {
         this.container.innerHTML = `
           <div class="user-info">
@@ -189,9 +179,7 @@
       }
     }
 
-    /* ===============================
-       OBJECT INSTANCE
-    ================================ */
+    /* OBJECT INSTANCE */
     new AuthSystem("app");
   </script>
 
