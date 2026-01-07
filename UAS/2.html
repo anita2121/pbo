@@ -1,0 +1,105 @@
+<script>
+class AuthSystem {
+
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    this.setupStorage();
+    this.showLoginUI();
+  }
+
+  /* =========================
+     DATA & STORAGE
+  ========================== */
+  setupStorage() {
+    if (!localStorage.getItem("accountData")) {
+      const accounts = {
+        admin: "21anita",
+        user: "21nita"
+      };
+      localStorage.setItem("accountData", JSON.stringify(accounts));
+    }
+  }
+
+  loadAccounts() {
+    return JSON.parse(localStorage.getItem("accountData"));
+  }
+
+  /* =========================
+     UI RENDER
+  ========================== */
+  showLoginUI() {
+    this.container.innerHTML = `
+      <img src="foto4.png" class="login-image">
+      <h2>Login</h2>
+
+      <div class="input-group">
+        <input type="text" id="inpUser" placeholder="Username">
+        <input type="password" id="inpPass" placeholder="Password">
+      </div>
+
+      <button id="btnLogin">Login</button>
+      <button id="btnCancel">Cancel</button>
+    `;
+
+    document.getElementById("btnLogin")
+      .onclick = () => this.processLogin();
+
+    document.getElementById("btnCancel")
+      .onclick = () => this.clearInput();
+  }
+
+  /* =========================
+     LOGIN LOGIC
+  ========================== */
+  processLogin() {
+    const username = document.getElementById("inpUser").value.trim();
+    const password = document.getElementById("inpPass").value.trim();
+
+    if (username === "" || password === "") {
+      alert("Username dan password wajib diisi");
+      return;
+    }
+
+    if (this.validateUser(username, password)) {
+      this.showSuccess(username);
+    } else {
+      alert("Username atau password salah");
+    }
+  }
+
+  validateUser(user, pass) {
+    const data = this.loadAccounts();
+    return data[user] === pass;
+  }
+
+  /* =========================
+     RESULT
+  ========================== */
+  showSuccess(name) {
+    this.container.innerHTML = `
+      <div class="user-info">
+        <h2>Berhasil login</h2>
+        <p>Hallo <b>${name}</b>, selamat datang di sistem</p>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    `;
+
+    document.getElementById("logoutBtn")
+      .onclick = () => this.logout();
+  }
+
+  logout() {
+    this.showLoginUI();
+  }
+
+  clearInput() {
+    document.getElementById("inpUser").value = "";
+    document.getElementById("inpPass").value = "";
+  }
+}
+
+/* =========================
+   INSTANCE
+========================= */
+new AuthSystem("app");
+                            </script>
