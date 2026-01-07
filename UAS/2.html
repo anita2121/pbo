@@ -1,105 +1,199 @@
-<script>
-class AuthSystem {
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>My Application</title>
 
-  constructor(containerId) {
-    this.container = document.getElementById(containerId);
-    this.setupStorage();
-    this.showLoginUI();
-  }
-
-  /* =========================
-     DATA & STORAGE
-  ========================== */
-  setupStorage() {
-    if (!localStorage.getItem("accountData")) {
-      const accounts = {
-        admin: "21anita",
-        user: "21nita"
-      };
-      localStorage.setItem("accountData", JSON.stringify(accounts));
-    }
-  }
-
-  loadAccounts() {
-    return JSON.parse(localStorage.getItem("accountData"));
-  }
-
-  /* =========================
-     UI RENDER
-  ========================== */
-  showLoginUI() {
-    this.container.innerHTML = `
-      <img src="foto4.png" class="login-image">
-      <h2>Login</h2>
-
-      <div class="input-group">
-        <input type="text" id="inpUser" placeholder="Username">
-        <input type="password" id="inpPass" placeholder="Password">
-      </div>
-
-      <button id="btnLogin">Login</button>
-      <button id="btnCancel">Cancel</button>
-    `;
-
-    document.getElementById("btnLogin")
-      .onclick = () => this.processLogin();
-
-    document.getElementById("btnCancel")
-      .onclick = () => this.clearInput();
-  }
-
-  /* =========================
-     LOGIN LOGIC
-  ========================== */
-  processLogin() {
-    const username = document.getElementById("inpUser").value.trim();
-    const password = document.getElementById("inpPass").value.trim();
-
-    if (username === "" || password === "") {
-      alert("Username dan password wajib diisi");
-      return;
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
-    if (this.validateUser(username, password)) {
-      this.showSuccess(username);
-    } else {
-      alert("Username atau password salah");
+    body {
+      font-family: Arial, sans-serif;
+      background: #292e40;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-  }
 
-  validateUser(user, pass) {
-    const data = this.loadAccounts();
-    return data[user] === pass;
-  }
+    .box {
+      background: #ffffff;
+      padding: 30px;
+      width: 340px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+      text-align: center;
+    }
 
-  /* =========================
-     RESULT
-  ========================== */
-  showSuccess(name) {
-    this.container.innerHTML = `
-      <div class="user-info">
-        <h2>Berhasil login</h2>
-        <p>Hallo <b>${name}</b>, selamat datang di sistem</p>
-        <button id="logoutBtn">Logout</button>
-      </div>
-    `;
+    .login-image {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
 
-    document.getElementById("logoutBtn")
-      .onclick = () => this.logout();
-  }
+    h2 {
+      margin-bottom: 18px;
+    }
 
-  logout() {
-    this.showLoginUI();
-  }
+    .input-group input {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
 
-  clearInput() {
-    document.getElementById("inpUser").value = "";
-    document.getElementById("inpPass").value = "";
-  }
-}
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-/* =========================
-   INSTANCE
-========================= */
-new AuthSystem("app");
-                            </script>
+    #loginBtn {
+      background: #292e40;
+      color: white;
+      margin-top: 5px;
+    }
+
+    #cancelBtn {
+      margin-top: 8px;
+      background: #f0f0f0;
+      color: #444;
+    }
+
+    #logoutBtn {
+      margin-top: 15px;
+      background: #e53935;
+      color: white;
+    }
+
+    .user-info {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box" id="app"></div>
+
+  <script>
+    /* ===============================
+       AUTH SYSTEM (OOP)
+    ================================ */
+    class AuthSystem {
+
+      constructor(containerId) {
+        this.container = document.getElementById(containerId);
+        this.initializeData();
+        this.renderLogin();
+      }
+
+      /* ===============================
+         DATA & LOCAL STORAGE
+      ================================ */
+      initializeData() {
+        if (!localStorage.getItem("authUsers")) {
+          const users = {
+            admin: "21anita",
+            user: "21nita"
+          };
+          localStorage.setItem("authUsers", JSON.stringify(users));
+        }
+      }
+
+      getUsers() {
+        return JSON.parse(localStorage.getItem("authUsers"));
+      }
+
+      /* ===============================
+         LOGIN UI
+      ================================ */
+      renderLogin() {
+        this.container.innerHTML = `
+          <img src="foto4.png" alt="Login Image" class="login-image">
+          <h2>Login</h2>
+
+          <div class="input-group">
+            <input type="text" id="usernameInput" placeholder="Username">
+            <input type="password" id="passwordInput" placeholder="Password">
+          </div>
+
+          <button id="loginBtn">Login</button>
+          <button id="cancelBtn">Cancel</button>
+        `;
+
+        document.getElementById("loginBtn")
+          .addEventListener("click", () => this.handleLogin());
+
+        document.getElementById("cancelBtn")
+          .addEventListener("click", () => this.clearForm());
+      }
+
+      /* ===============================
+         LOGIN PROCESS
+      ================================ */
+      handleLogin() {
+        const username = document.getElementById("usernameInput").value.trim();
+        const password = document.getElementById("passwordInput").value.trim();
+
+        if (username === "" || password === "") {
+          alert("Username dan password wajib diisi");
+          return;
+        }
+
+        if (this.checkUser(username, password)) {
+          this.renderSuccess(username);
+        } else {
+          alert("Username atau password salah");
+        }
+      }
+
+      checkUser(username, password) {
+        const users = this.getUsers();
+        return users[username] === password;
+      }
+
+      /* ===============================
+         SUCCESS UI
+      ================================ */
+      renderSuccess(username) {
+        this.container.innerHTML = `
+          <div class="user-info">
+            <h2>Berhasil login</h2>
+            <p>Hallo <b>${username}</b>, selamat datang di sistem</p>
+            <button id="logoutBtn">Logout</button>
+          </div>
+        `;
+
+        document.getElementById("logoutBtn")
+          .addEventListener("click", () => this.logout());
+      }
+
+      logout() {
+        this.renderLogin();
+      }
+
+      clearForm() {
+        document.getElementById("usernameInput").value = "";
+        document.getElementById("passwordInput").value = "";
+      }
+    }
+
+    /* ===============================
+       OBJECT INSTANCE
+    ================================ */
+    new AuthSystem("app");
+  </script>
+
+</body>
+</html>
