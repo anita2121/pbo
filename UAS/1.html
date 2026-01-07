@@ -27,7 +27,6 @@
       text-align: center;
     }
 
-    /* gambar di atas login */
     .login-image {
       width: 90px;
       height: 90px;
@@ -100,8 +99,8 @@
       initData() {
         if (!localStorage.getItem('users')) {
           const users = [
-            { username: 'admin', password: '12345' },
-            { username: 'user', password: 'user123' }
+            { username: 'admin', password: 'anita' },
+            { username: 'user', password: 'nita' }
           ];
           localStorage.setItem('users', JSON.stringify(users));
         }
