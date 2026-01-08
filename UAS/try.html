@@ -111,7 +111,7 @@
         return JSON.parse(localStorage.getItem("authUsers"));
       }
 
-      /*LOGIN UI*/
+      /* LOGIN UI */
       renderLogin() {
         this.container.innerHTML = `
           <img src="foto4.png" alt="Login Image" class="login-image">
@@ -130,10 +130,10 @@
           .addEventListener("click", () => this.handleLogin());
 
         document.getElementById("cancelBtn")
-          .addEventListener("click", () => this.clearForm());
+          .addEventListener("click", () => this.cancelApp());
       }
 
-      /*LOGIN PROCESS*/
+      /* LOGIN PROCESS */
       handleLogin() {
         const username = document.getElementById("usernameInput").value.trim();
         const password = document.getElementById("passwordInput").value.trim();
@@ -155,7 +155,7 @@
         return users[username] === password;
       }
 
-      /*SUCCESS UI*/
+      /* SUCCESS UI */
       renderSuccess(username) {
         this.container.innerHTML = `
           <div class="user-info">
@@ -176,6 +176,17 @@
       clearForm() {
         document.getElementById("usernameInput").value = "";
         document.getElementById("passwordInput").value = "";
+      }
+
+      /* === CANCEL*/
+      cancelApp() {
+        // Coba tutup window (PWA / WebView)
+        window.close();
+
+        // Fallback jika browser menolak
+        setTimeout(() => {
+          window.location.href = "about:blank";
+        }, 100);
       }
     }
 
