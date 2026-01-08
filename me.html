@@ -1,154 +1,180 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Login PBO</title>
+  <meta charset="UTF-8">
+  <title>Game Login 🎮</title>
 
-<style>
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #2b1055, #5f259f);
-}
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-.box {
-  background: #ffffff;
-  padding: 30px;
-  width: 320px;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  text-align: center;
-}
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #1b2735, #090a0f);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Press Start 2P', cursive;
+      color: #00ffea;
+    }
 
-h2 {
-  margin-bottom: 15px;
-  color: #5f259f;
-}
+    .box {
+      background: #0f172a;
+      padding: 28px 24px;
+      width: 360px;
+      border-radius: 16px;
+      border: 2px solid #00ffea;
+      box-shadow:
+        0 0 20px rgba(0,255,234,0.6),
+        inset 0 0 20px rgba(0,255,234,0.2);
+      text-align: center;
+    }
 
-input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
+    h2 {
+      font-size: 16px;
+      margin-bottom: 16px;
+      text-shadow: 0 0 8px #00ffea;
+    }
 
-button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
-}
+    .pixel {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
 
-#loginBtn {
-  background: #7b2cbf;
-  color: white;
-  margin-top: 10px;
-}
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 2px solid #1e293b;
+      background: #020617;
+      color: #00ffea;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+    }
 
-#loginBtn:hover {
-  background: #5a189a;
-}
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      cursor: pointer;
+    }
 
-#cancelBtn {
-  margin-top: 8px;
-  background: #eee;
-}
+    #loginBtn {
+      background: linear-gradient(90deg, #00ffea, #38bdf8);
+      color: #020617;
+    }
 
-#logoutBtn {
-  margin-top: 15px;
-  background: #d62828;
-  color: white;
-}
+    #cancelBtn {
+      background: #1e293b;
+      color: #94a3b8;
+    }
 
-.user-info p {
-  color: #333;
-}
-</style>
+    #logoutBtn {
+      background: linear-gradient(90deg, #ff004c, #ff6b6b);
+      color: white;
+    }
+
+    p {
+      font-size: 10px;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="box" id="app"></div>
+  <div class="box" id="app"></div>
 
-<script>
-class LoginApp {
-  constructor(containerId) {
-    this.container = document.getElementById(containerId);
-    this.initData();
-    this.renderLogin();
-  }
+  <script>
+    class GameLogin {
 
-  initData() {
-    if (!localStorage.getItem('users')) {
-      const users = [
-        { username: 'admin', password: '12345' },
-        { username: 'user', password: 'user123' }
-      ];
-      localStorage.setItem('users', JSON.stringify(users));
+      constructor(containerId) {
+        this.container = document.getElementById(containerId);
+        this.initUserData();
+        this.showLogin();
+      }
+
+      /* =========================
+         INIT DATA (TIDAK KETIMPA)
+      ========================== */
+      initUserData() {
+        if (!localStorage.getItem("gameUsers")) {
+          const users = [
+            { username: "admin", password: "12345" },
+            { username: "user", password: "Lola321" }
+          ];
+          localStorage.setItem("gameUsers", JSON.stringify(users));
+        }
+      }
+
+      getUsers() {
+        return JSON.parse(localStorage.getItem("gameUsers"));
+      }
+
+      /* =========================
+         LOGIN UI
+      ========================== */
+      showLogin() {
+        this.container.innerHTML = `
+          <div class="pixel">🕹️</div>
+          <h2>PLAYER LOGIN</h2>
+          <input type="text" id="username" placeholder="PLAYER NAME">
+          <input type="password" id="password" placeholder="PASSWORD">
+          <button id="loginBtn">START GAME</button>
+          <button id="cancelBtn">RESET</button>
+        `;
+
+        document.getElementById("loginBtn").onclick = () => this.login();
+        document.getElementById("cancelBtn").onclick = () => this.clear();
+      }
+
+      /* =========================
+         LOGIN PROCESS
+      ========================== */
+      login() {
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        const users = this.getUsers();
+
+        const valid = users.some(
+          u => u.username === username && u.password === password
+        );
+
+        if (!valid) {
+          alert("💀 GAME OVER! LOGIN FAILED");
+        } else {
+          this.showSuccess(username);
+        }
+      }
+
+      /* =========================
+         SUCCESS PAGE
+      ========================== */
+      showSuccess(username) {
+        this.container.innerHTML = `
+          <div class="pixel">🏆</div>
+          <h2>LEVEL CLEARED</h2>
+          <p>WELCOME PLAYER<br><b>${username}</b></p>
+          <button id="logoutBtn">EXIT GAME</button>
+        `;
+
+        document.getElementById("logoutBtn").onclick = () => this.showLogin();
+      }
+
+      clear() {
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+      }
     }
-  }
 
-  renderLogin() {
-    this.container.innerHTML = `
-      <h2>Login</h2>
-      <input type="text" id="username" placeholder="Username">
-      <input type="password" id="password" placeholder="Password">
-      <button id="loginBtn">Login</button>
-      <button id="cancelBtn">Cancel</button>
-    `;
-
-    document.getElementById('loginBtn').onclick = () => this.login();
-    document.getElementById('cancelBtn').onclick = () => this.cancel();
-  }
-
-  login() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    const users = JSON.parse(localStorage.getItem('users'));
-    const found = users.find(
-      u => u.username === username && u.password === password
-    );
-
-    if (!found) {
-      alert('Username atau password salah!');
-    } else {
-      this.renderUserPage(found.username);
-    }
-  }
-
-  renderUserPage(username) {
-    this.container.innerHTML = `
-      <h2>Profile</h2>
-      <p>Halo <b>${username}</b>, login berhasil 🎉</p>
-      <button id="logoutBtn">Logout</button>
-    `;
-
-    document.getElementById('logoutBtn').onclick = () => this.logout();
-  }
-
-  logout() {
-    this.renderLogin();
-  }
-
-  cancel() {
-    document.getElementById('username').value = '';
-    document.getElementById('password').value = '';
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  new LoginApp('app');
-});
-</script>
+    new GameLogin("app");
+  </script>
 
 </body>
 </html>
