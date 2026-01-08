@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Login PBO</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #2b1055, #5f259f);
+}
+
+.box {
+  background: #ffffff;
+  padding: 30px;
+  width: 320px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 15px;
+  color: #5f259f;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#loginBtn {
+  background: #7b2cbf;
+  color: white;
+  margin-top: 10px;
+}
+
+#loginBtn:hover {
+  background: #5a189a;
+}
+
+#cancelBtn {
+  margin-top: 8px;
+  background: #eee;
+}
+
+#logoutBtn {
+  margin-top: 15px;
+  background: #d62828;
+  color: white;
+}
+
+.user-info p {
+  color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box" id="app"></div>
+
+<script>
+class LoginApp {
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    this.initData();
+    this.renderLogin();
+  }
+
+  initData() {
+    if (!localStorage.getItem('users')) {
+      const users = [
+        { username: 'admin', password: '12345' },
+        { username: 'user', password: 'user123' }
+      ];
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+  }
+
+  renderLogin() {
+    this.container.innerHTML = `
+      <h2>Login</h2>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button id="loginBtn">Login</button>
+      <button id="cancelBtn">Cancel</button>
+    `;
+
+    document.getElementById('loginBtn').onclick = () => this.login();
+    document.getElementById('cancelBtn').onclick = () => this.cancel();
+  }
+
+  login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const users = JSON.parse(localStorage.getItem('users'));
+    const found = users.find(
+      u => u.username === username && u.password === password
+    );
+
+    if (!found) {
+      alert('Username atau password salah!');
+    } else {
+      this.renderUserPage(found.username);
+    }
+  }
+
+  renderUserPage(username) {
+    this.container.innerHTML = `
+      <h2>Profile</h2>
+      <p>Halo <b>${username}</b>, login berhasil 🎉</p>
+      <button id="logoutBtn">Logout</button>
+    `;
+
+    document.getElementById('logoutBtn').onclick = () => this.logout();
+  }
+
+  logout() {
+    this.renderLogin();
+  }
+
+  cancel() {
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  new LoginApp('app');
+});
+</script>
+
+</body>
+</html>
